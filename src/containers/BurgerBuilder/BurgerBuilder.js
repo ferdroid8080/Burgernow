@@ -22,7 +22,8 @@ class BurgerBuilder extends Component {
                 cheese: 0,
                 meat: 0
             },
-            totalPrice: 6
+            totalPrice: 3.12,
+            purchasable: false
         }
 
     }
@@ -32,14 +33,26 @@ class BurgerBuilder extends Component {
         updateIngredients[type] += 1
         const newPrice = this.state.totalPrice + INGREDIENTS_PRICE[type]
         this.setState({totalPrice: newPrice, ingredients: updateIngredients})
+        this.updatePurchasable(updateIngredients)
     }
 
     removeIngredientHandler = (type) => {
         const updateCount = this.state.ingredients[type] > 0 ? this.state.ingredients[type] - 1 : 0 
         const updateIngredients = {...this.state.ingredients}
         updateIngredients[type] = updateCount
-        const newPrice = this.state.totalPrice > 6 ? this.state.totalPrice - INGREDIENTS_PRICE[type] : 6
+        const newPrice = this.state.totalPrice > 3.12 ? this.state.totalPrice - INGREDIENTS_PRICE[type] : 3.12
         this.setState({totalPrice: newPrice, ingredients: updateIngredients})
+        this.updatePurchasable(updateIngredients)
+    }
+
+    updatePurchasable = (ingredients) => {
+        const sum = Object.keys(ingredients)
+            .map(igKey => {
+                return ingredients[igKey]
+            }).reduce((sum, el) => {
+                return sum + el
+            }, 0)
+        this.setState({purchasable: sum > 0})
     }
 
 
@@ -52,7 +65,8 @@ class BurgerBuilder extends Component {
         return (
             <Aux>
                 <Burger ingredients={this.state.ingredients} />
-                <BuildControls onAddedIngredient={this.addIngredientHandler} onRemovedIngredient={this.removeIngredientHandler} disabled={disabledIngredient} />
+                <BuildControls onAddedIngredient={this.addIngredientHandler} onRemovedIngredient={this.removeIngredientHandler} 
+                    disabled={disabledIngredient} price={this.state.totalPrice} purchasable={this.state.purchasable} />
             </Aux>
         )
     }
