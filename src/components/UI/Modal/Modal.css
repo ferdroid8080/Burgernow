@@ -13,6 +13,21 @@
     transition: all 0.3s ease-out;
 }
 
+.Modal h2 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.Modal ul {
+    margin: 0px;
+    list-style-type: none;
+}
+.Modal ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+
 @media (min-width: 600px) {
     .Modal {
         width: 500px;
