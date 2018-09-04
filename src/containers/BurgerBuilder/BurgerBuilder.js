@@ -44,10 +44,15 @@ class BurgerBuilder extends Component {
 
 
     render() {
+        const disabledIngredient = {...this.state.ingredients}
+        for (let val in disabledIngredient) { // esto convierte el valor de cada propiedad a boolean
+            disabledIngredient[val] = disabledIngredient[val] <= 0
+        }
+
         return (
             <Aux>
                 <Burger ingredients={this.state.ingredients} />
-                <BuildControls onAddedIngredient={this.addIngredientHandler} onRemovedIngredient={this.removeIngredientHandler} />
+                <BuildControls onAddedIngredient={this.addIngredientHandler} onRemovedIngredient={this.removeIngredientHandler} disabled={disabledIngredient} />
             </Aux>
         )
     }
