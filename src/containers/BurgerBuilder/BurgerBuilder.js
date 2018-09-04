@@ -28,10 +28,8 @@ class BurgerBuilder extends Component {
     }
 
     addIngredientHandler = (type) => {
-        const oldCount = this.state.ingredients[type]
-        const updateCount = oldCount + 1
         const updateIngredients = {...this.state.ingredients}
-        updateIngredients[type] = updateCount
+        updateIngredients[type] += 1
         const newPrice = this.state.totalPrice + INGREDIENTS_PRICE[type]
         this.setState({totalPrice: newPrice, ingredients: updateIngredients})
     }
