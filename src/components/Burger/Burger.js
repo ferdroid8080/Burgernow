@@ -15,7 +15,7 @@ const burger = (props) => {
 
     //console.log(transformedIngredients)
     if (transformedIngredients.length === 0)
-        transformedIngredients = <p>Please adding some ingredients to start off!</p>
+        transformedIngredients = <p>¡Empiece a añadir los ingredientes deseados para armar tu hamburguesa!</p>
 
     // let countIngredients = 0
     // transformedIngredients.forEach((val, i) => {
