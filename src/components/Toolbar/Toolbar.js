@@ -1,13 +1,14 @@
 import React from 'react';
 
 import Stylesheet from './Toolbar.css';
+import Logo from '../Logo/Logo';
 
 
 const toolbar = (props) => {
     return (
         <header className={Stylesheet.Toolbar}>
             <div>MENU</div>
-            <div>LOGO</div>
+            <Logo />
             <nav>
                 <ul>
                     <li>Item 1</li>
