@@ -2,6 +2,7 @@ import React from 'react';
 
 import Stylesheet from './Toolbar.css';
 import Logo from '../Logo/Logo';
+import NavigationContainer from '../NavigationContainer/NavigationContainer';
 
 
 const toolbar = (props) => {
@@ -10,10 +11,7 @@ const toolbar = (props) => {
             <div>MENU</div>
             <Logo />
             <nav>
-                <ul>
-                    <li>Item 1</li>
-                    <li>Item 2</li>
-                </ul>
+                <NavigationContainer />                
             </nav>
         </header>
     )

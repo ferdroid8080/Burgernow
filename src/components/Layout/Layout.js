@@ -3,7 +3,7 @@ import React from 'react';
 import Aux from '../../hoc/Aux';
 import Stylesheet from './Layout.css';
 
-import Toolbar from '../Toolbar/Toolbar';
+import Toolbar from '../Navigation/Toolbar/Toolbar';
 
 
 const layout = (props) => (
