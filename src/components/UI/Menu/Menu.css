@@ -1,0 +1,13 @@
+.Menu {
+    cursor: pointer;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 500px) {
+    .Menu {
+        display: none;
+    }
+}

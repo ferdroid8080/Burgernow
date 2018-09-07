@@ -6,3 +6,9 @@
     align-items: center;
     height: 100%;
 }
+
+@media (max-width: 500px) {
+    .NavigationContainer {
+        display: block;
+    }
+}
