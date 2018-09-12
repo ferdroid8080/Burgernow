@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../UI/Button/Button';
 
 import Stylesheet from './OrderSummary.css';
@@ -18,8 +18,8 @@ const orderSummary = (props) => {
                     <tr key={igKey}>
                         <td>{itemdetail.label}</td>
                         <td className='text-center'>{props.ingredients[igKey]}</td>
-                        <td>$ {itemdetail.price}</td>
-                        <td>$ {(itemdetail.price * props.ingredients[igKey]).toFixed(2)}</td>
+                        <td>$ {itemdetail.price.toLocaleString()}</td>
+                        <td>$ {(itemdetail.price * props.ingredients[igKey]).toLocaleString()}</td>
                     </tr>
                 : null
             )
@@ -34,7 +34,7 @@ const orderSummary = (props) => {
                     <tr>
                         <td>Ingrediente</td>
                         <td>Cantidad</td>
-                        <td>Precio Unitario (<strong>USD</strong>)</td>
+                        <td>Precio Unitario (<strong>COP</strong>)</td>
                         <td>Precio Total</td>
                     </tr>
                 </thead>
@@ -42,7 +42,7 @@ const orderSummary = (props) => {
                     {ingredientSummary}
                 </tbody>
             </table>
-            <p><strong>Valor a pagar: ${props.price.toFixed(2)} USD</strong></p>
+            <p><strong>Valor a pagar: ${props.price.toLocaleString()} COP</strong></p>
             <p>¿Esta bien que continue con la compra?</p>
             <Button btnType="Danger" btnClicked={props.purchaseCancelledHandler}>cancelar</Button>
             <Button btnType="Success" btnClicked={props.purchaseContinuedHandler}>pagar</Button>

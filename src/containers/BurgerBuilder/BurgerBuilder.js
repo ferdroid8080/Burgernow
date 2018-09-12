@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/Aux';
+import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENTS = [
-    {id: 1, label: 'Cebolla', type: 'salad', price: 0.7},
-    {id: 2, label: 'Tocino', type: 'bacon', price: 1.2},
-    {id: 3, label: 'Queso', type: 'cheese', price: 0.4},
-    {id: 4, label: 'Carne', type: 'meat', price: 1.8}
+    {id: 1, label: 'Cebolla', type: 'salad', price: 600},
+    {id: 2, label: 'Tocino', type: 'bacon', price: 3400},
+    {id: 3, label: 'Queso', type: 'cheese', price: 4600},
+    {id: 4, label: 'Carne', type: 'meat', price: 7600}
 ]
 
 class BurgerBuilder extends Component {
@@ -19,7 +19,7 @@ class BurgerBuilder extends Component {
         
         this.state = {
             ingredients: {},
-            totalPrice: 3.12,
+            totalPrice: 4000,
             purchasable: false,
             purchasing: false
         }
@@ -43,7 +43,7 @@ class BurgerBuilder extends Component {
         let updateCount = this.state.ingredients[type] > 0 ? this.state.ingredients[type] - 1 : 0
         let updateIngredients = {...this.state.ingredients}
         updateIngredients[type] = updateCount
-        const newPrice = this.state.totalPrice > 3.12 ? this.state.totalPrice - INGREDIENTS[index].price : 3.12
+        const newPrice = this.state.totalPrice - INGREDIENTS[index].price
         this.setState({totalPrice: newPrice, ingredients: updateIngredients})
         this.updatePurchasable(updateIngredients)
     }

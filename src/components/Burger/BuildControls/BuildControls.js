@@ -8,7 +8,7 @@ import BuildControl from './BuildControl/BuildControl';
 const buildControls = (props) => {
     return (
         <div className={Stylesheet.BuildControls}>
-            <p>Total a pagar: <strong>${props.price.toFixed(2)} USD</strong></p>
+            <p>Total a pagar: <strong>$ {props.price.toLocaleString()} COP</strong></p>
             {props.controls.map((ctrl, index) => (
                 <BuildControl key={ctrl.id} label={ctrl.label} 
                     added={() => props.onAddedIngredient(index, ctrl.type)} removed={() => props.onRemovedIngredient(index, ctrl.type)}
