@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/Aux';
+import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
@@ -23,7 +23,7 @@ class BurgerBuilder extends Component {
                 // {id: 4, label: 'Carne', type: 'meat', price: 1.8}
             ],
             ingredients: {},
-            totalPrice: 3.12,
+            totalPrice: 4000,
             purchasable: false,
             purchasing: false,
             loadingIngredients: false,

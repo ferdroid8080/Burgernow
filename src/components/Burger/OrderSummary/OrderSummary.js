@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../UI/Button/Button';
 import Spinner from '../../UI/Spinner/Spinner';
 
@@ -19,8 +19,8 @@ const orderSummary = (props) => {
                     <tr key={igKey}>
                         <td>{itemdetail.label}</td>
                         <td className='text-center'>{props.ingredients[igKey]}</td>
-                        <td>$ {itemdetail.price}</td>
-                        <td>$ {(itemdetail.price * props.ingredients[igKey]).toFixed(2)}</td>
+                        <td>$ {itemdetail.price.toLocaleString()}</td>
+                        <td>$ {(itemdetail.price * props.ingredients[igKey]).toLocaleString()}</td>
                     </tr>
                 : null
             )
