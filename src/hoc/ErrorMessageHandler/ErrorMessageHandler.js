@@ -10,7 +10,8 @@ const errorMessage = (WrappedComponent, axios) => {
             error: null
         }
 
-        componentDidMount() {
+        componentWillMount() {
+            console.log('[WillMount] errorMessage')
             axios.interceptors.request.use(req => {
                 this.setState({error: null})
                 return req
