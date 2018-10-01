@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../Aux';
+import Aux from '../Aux/Aux';
 import Modal from '../../components/UI/Modal/Modal';
 
 
