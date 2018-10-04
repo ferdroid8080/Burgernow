@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
@@ -13,10 +13,8 @@ class App extends Component {
       <div>
         <Layout>
             <Switch>
-              <Route exact path='/builder' component={BurgerBuilder} />
-              <Route exact path='/checkout' component={Checkout} />
-              <Redirect exact from='/' to='/builder' />
-              <Route render={() => <h3 style={{textAlign: 'center'}}>404 Page not found</h3>} />
+              <Route path='/checkout' component={Checkout} />
+              <Route path='/' component={BurgerBuilder} />
             </Switch>
         </Layout>
       </div>
