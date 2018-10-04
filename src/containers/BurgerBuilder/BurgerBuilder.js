@@ -74,31 +74,11 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        // const pedidoData = {
-        //     ingredientes: this.state.ingredients,
-        //     precio: this.state.totalPrice,
-        //     cliente: {
-        //         nombre: 'FernanityNation',
-        //         direccion: 'Calle falsa 123 #78-90',
-        //         telefono: '+57 7 6991100',
-        //         email: 'fernanity@nation.com'
-        //     },
-        //     metodoEntrega: 'rapida',
-        // }
-        // this.setState({loadingPurchase: true})
-        
-        // axios.post('/pedidos.json', pedidoData)
-        //     .then(response => {
-        //         this.setState({purchasing: false, loadingPurchase: false})
-        //     })
-        //     .catch(error => {
-        //         this.setState({purchasing: false, loadingPurchase: false})
-        //     })
-
         let queryParams = []
         for (let i in this.state.ingredients) {
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
         }
+        queryParams.push('price=' + this.state.totalPrice)
         const queryString = queryParams.join('&')
 
         this.props.history.push({
