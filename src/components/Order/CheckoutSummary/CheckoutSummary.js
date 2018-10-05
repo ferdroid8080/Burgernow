@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Burger from '../Burger/Burger';
-import Button from '../../components/UI/Button/Button';
+import Burger from '../../Burger/Burger';
+import Button from '../../UI/Button/Button';
 
 import Stylesheet from './CheckoutSummary.css';
 

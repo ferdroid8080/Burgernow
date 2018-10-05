@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import CheckoutSummary from '../../components/CheckoutSummary/CheckoutSummary';
+import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
+import Aux from '../../hoc/Aux/Aux';
 
 class Checkout extends Component {
     state = {
@@ -34,10 +35,21 @@ class Checkout extends Component {
     }
 
     render() {
+        let checkout = null
+        if ( Object.keys(this.state.ingredients).length > 0 ) {
+            checkout = (
+                <Aux>
+                    <CheckoutSummary ingredients={this.state.ingredients} clickedCancel={this.checkoutCancelHandler.bind(this)} clickedContinue={this.checkoutContinueHandler.bind(this)} />
+                    <Route path={this.props.match.url + '/contact-data'} render={(props) => <ContactData ingredients={this.state.ingredients} price={this.state.totalPrice} {...props} />} />
+                </Aux>
+            )
+        } else {
+            checkout = <h2 style={{textAlign: 'center'}}>Te sugiero armar primero tu hamburguesa deseada</h2>
+        }
+
         return (
             <div>
-                <CheckoutSummary ingredients={this.state.ingredients} clickedCancel={this.checkoutCancelHandler.bind(this)} clickedContinue={this.checkoutContinueHandler.bind(this)} />
-                <Route path={this.props.match.url + '/contact-data'} render={(props) => <ContactData ingredients={this.state.ingredients} price={this.state.totalPrice} {...props} />} />
+                {checkout}
             </div>
         )
     }

@@ -26,11 +26,11 @@ class ContactData extends Component {
             ingredientes: this.props.ingredients,
             precio: this.props.price,
             cliente: {
-                nombre: this.state.name,
-                direccion: this.state.address.street,
-                postalcode: this.state.postalCode,
-                telefono: this.state.address.phone,
-                email: this.state.address.phone
+                nombre: "Demo User",
+                direccion: "Demo Direccion",
+                postalcode: "postal code de demostracion",
+                telefono: "demo phone",
+                email: "demo email"
             },
             metodoEntrega: 'rapida',
         }
@@ -38,7 +38,8 @@ class ContactData extends Component {
         
         axios.post('/pedidos.json', pedidoData)
             .then(response => {
-                this.setState({loadingPurchase: false, sentPurchase: true})
+                //this.setState({loadingPurchase: false, sentPurchase: true})
+                this.props.history.replace('/')
             })
             .catch(error => {
                 this.setState({loadingPurchase: false})
