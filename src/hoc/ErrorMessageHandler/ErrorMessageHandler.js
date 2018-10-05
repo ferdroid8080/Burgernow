@@ -25,7 +25,7 @@ const errorMessage = (WrappedComponent, axios) => {
         componentWillUnmount() {
             axios.interceptors.request.eject(this.reqInterceptor)
             axios.interceptors.response.eject(this.resInterceptor)
-            console.log('[WillUnmount]', this.reqInterceptor, this.resInterceptor)
+            console.log('[WillUnmount] errorMessage', this.reqInterceptor, this.resInterceptor)
         }
 
         render() {
