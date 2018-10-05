@@ -7,8 +7,8 @@ import NavItem from './NavItem/NavItem';
 
 const navigationContainer = (props) => (
     <ul className={Stylesheet.NavigationContainer}>
-        <NavItem link="/builder">Personalizala!</NavItem>
-        <NavItem link="/checkout">Revisa tu orden</NavItem>
+        <NavItem link="/" exact>Personalizala!</NavItem>
+        <NavItem link="/orders">Pedidos</NavItem>
     </ul>
 )
 
