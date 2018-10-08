@@ -17,7 +17,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Dinos tu nombre'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             direccion: {
                 elementType: 'input',
@@ -25,7 +30,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: '¿Donde vives?'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             postalcode: {
                 elementType: 'input',
@@ -33,7 +43,14 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Dinos el codigo postal del area donde vives'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true,
+                    min: 5,
+                    max: 6
+                },
+                valid: false,
+                touched: false
             },
             telefono: {
                 elementType: 'input',
@@ -41,7 +58,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: '¿Cual es tu numero telefonico?'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -49,7 +71,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Tu direccion de correo electronido (prometemos no enviarte spam)'
                 },
-                value: ''
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false
             },
             metodoEntrega: {
                 elementType: 'select',
@@ -59,9 +86,11 @@ class ContactData extends Component {
                         {value: 'cheapest', displayValue: 'La mas economica'}
                     ]
                 },
-                value: ''
+                value: 'cheapest',
+                valid: true
             }
         },
+        formIsValid: false,
         loadingPurchase: false,
         sentPurchase: false
     }
@@ -91,12 +120,40 @@ class ContactData extends Component {
             })
     }
 
+    checkValidations(value, rules) {
+        let isValid = true
+        
+        if (rules.required) {
+            isValid = value.trim().length !== 0 && isValid
+        }
+
+        if (rules.min) {
+            isValid = value.trim().length >= rules.min && isValid
+        }
+
+        if (rules.max) {
+            isValid = value.trim().length <= rules.max && isValid
+        }
+
+        return isValid
+    }
+
     onInputChangedHandler = (event, inputId) => {
         const updatedOrderForm = {...this.state.orderDataForm}
         const updatedInputElement = {...updatedOrderForm[inputId]}
         updatedInputElement.value = event.target.value
+        if (updatedInputElement.validation)
+            updatedInputElement.valid = this.checkValidations(updatedInputElement.value, updatedInputElement.validation)
+        updatedInputElement.touched = true
+        
         updatedOrderForm[inputId] = updatedInputElement
-        this.setState({orderDataForm: updatedOrderForm})
+        
+        let formIsValid = true
+        for (let inputId in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputId].valid && formIsValid
+        }
+        
+        this.setState({orderDataForm: updatedOrderForm, formIsValid: formIsValid})
     }
 
     render() {
@@ -108,6 +165,9 @@ class ContactData extends Component {
                 elementType={this.state.orderDataForm[fi].elementType} 
                 elementConfig={this.state.orderDataForm[fi].elementConfig} 
                 value={this.state.orderDataForm[fi].value}
+                shouldValidate={this.state.orderDataForm[fi].validation}
+                valid={this.state.orderDataForm[fi].valid}
+                touched={this.state.orderDataForm[fi].touched}
                 changed={(event) => this.onInputChangedHandler(event, fi)} />
         )
 
@@ -121,7 +181,7 @@ class ContactData extends Component {
                     <form onSubmit={this.orderClickHandler}>
                         <legend>Enter your contact details</legend>
                         {formInputs}
-                        <Button btnType='Success' btnClicked={this.orderClickHandler}>ORDER</Button>
+                        <Button btnType='Success' btnClicked={this.orderClickHandler} disabled={!this.state.formIsValid}>ORDER</Button>
                     </form>
                 )
             }
