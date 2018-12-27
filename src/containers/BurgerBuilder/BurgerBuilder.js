@@ -16,14 +16,6 @@ class BurgerBuilder extends Component {
         super(props)
         
         this.state = {
-            fullIngredients: [
-                // {id: 1, label: 'Cebolla', type: 'salad', price: 0.7},
-                // {id: 2, label: 'Tocino', type: 'bacon', price: 1.2},
-                // {id: 3, label: 'Queso', type: 'cheese', price: 0.4},
-                // {id: 4, label: 'Carne', type: 'meat', price: 1.8}
-            ],
-            ingredients: {},
-            totalPrice: 4000,
             purchasable: false,
             purchasing: false,
             loadingIngredients: false,
