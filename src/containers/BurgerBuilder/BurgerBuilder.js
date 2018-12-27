@@ -89,7 +89,11 @@ class BurgerBuilder extends Component {
 
         const ingredientList = [...fullIngredients]
 
-        axios.get('/ingredientes.json')
+        if (ingredientList.length === 0) { 
+            // correr esto solo una vez
+            // para evitar duplicidad
+
+            axios.get('/ingredientes.json')
             .then(response => {
                 response.data.map(item => ingredientList.push(item))
                 fullIngredients = [...ingredientList]
@@ -100,6 +104,11 @@ class BurgerBuilder extends Component {
             .catch(error => {
                 this.setState({error: true})
             })
+
+        } else {
+            this.setState({loadingIngredients: false})
+        }
+
     }
 
 
