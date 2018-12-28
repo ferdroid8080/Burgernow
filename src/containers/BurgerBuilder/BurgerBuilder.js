@@ -20,7 +20,6 @@ class BurgerBuilder extends Component {
         super(props)
         
         this.state = {
-            purchasable: false,
             purchasing: false,
             loadingIngredients: false,
             loadingPurchase: false,
@@ -58,7 +57,7 @@ class BurgerBuilder extends Component {
             }).reduce((sum, el) => {
                 return sum + el
             }, 0)
-        this.setState({purchasable: sum > 0})
+        return sum > 0
     }
 
     purchaseHandler = () => { // las arrow function permite usar el contexto this de la clase
@@ -70,17 +69,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        let queryParams = []
-        for (let i in this.props.ingredients) {
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ingredients[i]))
-        }
-        queryParams.push('price=' + this.props.price)
-        const queryString = queryParams.join('&')
-
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString
-        })
+        this.props.history.push('/checkout')
     }
 
 
@@ -125,7 +114,7 @@ class BurgerBuilder extends Component {
             buildcontrols = (
                 <BuildControls 
                     onAddedIngredient={this.props.onIngredientAdded} onRemovedIngredient={this.props.onIngredientRemoved} 
-                    disabled={disabledIngredient} price={this.props.price} purchasable={this.state.purchasable} 
+                    disabled={disabledIngredient} price={this.props.price} purchasable={this.updatePurchasable(this.props.ingredients)} 
                     clicked={this.purchaseHandler} controls={fullIngredients} />
             )
 
