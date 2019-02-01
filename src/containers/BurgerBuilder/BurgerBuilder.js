@@ -8,7 +8,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import ErrorMessageHandler from '../../hoc/ErrorMessageHandler/ErrorMessageHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actionTypes from '../../store/actions';
+import * as burgerBuilderAction from '../../store/actions/index'; // se puede quitar 'index' y automaticamente el archivo index es invocado
 
 import axios from '../../axios';
 
@@ -141,16 +141,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (index, ingName) => dispatch({
-            type: actionTypes.ADD_INGREDIENT, 
-            ingredientName: ingName, 
-            ingredientPrice: fullIngredients[index].price
-        }),
-        onIngredientRemoved: (index, ingName) => dispatch({
-            type: actionTypes.REMOVE_INGREDIENT, 
-            ingredientName: ingName, 
-            ingredientPrice: fullIngredients[index].price
-        })
+        onIngredientAdded: (index, ingName) => {
+            const ingPrice = fullIngredients[index].price
+            return dispatch(burgerBuilderAction.addIngredient(ingName, ingPrice))
+        },
+        onIngredientRemoved: (index, ingName) => {
+            const ingPrice = fullIngredients[index].price
+            return dispatch(burgerBuilderAction.removeIngredient(ingName, ingPrice))
+        }
     }
 }
 
