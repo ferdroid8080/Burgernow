@@ -8,23 +8,24 @@ import Stylesheet from './OrderSummary.css';
 
 
 const orderSummary = (props) => {
-    //props.fullIngredients.filter(item => console.log(item.type))
-
-    const ingredientSummary = Object.keys(props.ingredients)
+    let ingredientSummary = null
+    if (props.ingredients) {
+        ingredientSummary = Object.keys(props.ingredients)
         .map(igKey => {
-            let itemdetail = props.fullIngredients.find(el => el.type === igKey)
+            const itemDetail = props.ingredients[igKey]
             return (
-                props.ingredients[igKey] !== 0
+                props.ingredients[igKey]
                 ?
                     <tr key={igKey}>
-                        <td>{itemdetail.label}</td>
-                        <td className='text-center'>{props.ingredients[igKey]}</td>
-                        <td>$ {itemdetail.price.toLocaleString()}</td>
-                        <td>$ {(itemdetail.price * props.ingredients[igKey]).toLocaleString()}</td>
+                        <td>{itemDetail.label}</td>
+                        <td className='text-center'>{''}</td>
+                        <td>$ {itemDetail.price.toLocaleString()}</td>
+                        <td>$ {''}</td>
                     </tr>
                 : null
             )
         })
+    }
 
     return (
         props.loading ? 
