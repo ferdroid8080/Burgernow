@@ -12,8 +12,6 @@ import * as burgerBuilderAction from '../../store/actions/index'; // se puede qu
 
 import axios from '../../axios';
 
-let fullIngredients = []
-
 
 class BurgerBuilder extends Component {
     constructor(props) {
@@ -22,8 +20,7 @@ class BurgerBuilder extends Component {
         this.state = {
             purchasing: false,
             loadingIngredients: false,
-            loadingPurchase: false,
-            error: null
+            loadingPurchase: false
         }
 
     }
@@ -51,12 +48,15 @@ class BurgerBuilder extends Component {
     }
 
     updatePurchasable = (ingredients) => {
-        const sum = Object.keys(ingredients)
+        let sum = 0
+        if (ingredients) {
+            sum = Object.keys(ingredients)
             .map(igKey => {
                 return ingredients[igKey]
             }).reduce((sum, el) => {
                 return sum + el
             }, 0)
+        }
         return sum > 0
     }
 
@@ -74,58 +74,33 @@ class BurgerBuilder extends Component {
 
 
     componentDidMount() {
-        this.setState({loadingIngredients: true})
-
-        const ingredientList = [...fullIngredients]
-
-        if (ingredientList.length === 0) { 
-            // correr esto solo una vez
-            // para evitar duplicidad
-
-            // axios.get('/ingredientes.json')
-            // .then(response => {
-            //     response.data.map(item => ingredientList.push(item))
-            //     fullIngredients = [...ingredientList]
-            //     this.setState({
-            //         loadingIngredients: false
-            //     })
-            // })
-            // .catch(error => {
-            //     this.setState({error: true})
-            // })
-
-        } else {
-            this.setState({loadingIngredients: false})
-        }
-
+        console.log('[DidMount] BurgerBuilder has beend mounted!')
+        this.props.onInitIngredients()
     }
 
 
     render() {
-        const disabledIngredient = {...this.props.ingredients}
-        for (let val in disabledIngredient) { // esto convierte el valor de cada propiedad a boolean
-            disabledIngredient[val] = disabledIngredient[val] <= 0
-        }
+        let buildcontrols = null, burger = null
 
-        let buildcontrols = null
-        if (this.state.loadingIngredients)
-            buildcontrols = this.state.error ? <p style={{textAlign: 'center'}}>No es posible cargar el listado de ingredientes</p> : <Spinner />
-        else
+        burger = this.props.errorFetchingIngs ? <p>Imposible obtener los ingredientes</p> : <Spinner />
+
+        if (this.props.ingredients) {
+            burger = <Burger ingredients={this.props.ingredients} />
             buildcontrols = (
                 <BuildControls 
                     onAddedIngredient={this.props.onIngredientAdded} onRemovedIngredient={this.props.onIngredientRemoved} 
-                    disabled={disabledIngredient} price={this.props.price} purchasable={this.updatePurchasable(this.props.ingredients)} 
-                    clicked={this.purchaseHandler} controls={fullIngredients} />
+                    price={this.props.price} purchasable={this.updatePurchasable(this.props.ingredients)} 
+                    clicked={this.purchaseHandler} controls={this.props.ingredients} />
             )
-
+        }
 
         return (
             <Aux>
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-                    <OrderSummary ingredients={this.props.ingredients} fullIngredients={fullIngredients} price={this.props.price} loading={this.state.loadingPurchase}
+                    <OrderSummary ingredients={this.props.ingredients} price={this.props.price} loading={this.state.loadingPurchase}
                         purchaseCancelledHandler={this.purchaseCancelHandler} purchaseContinuedHandler={this.purchaseContinueHandler} />
                 </Modal>
-                <Burger ingredients={this.props.ingredients} />
+                {burger}
                 {buildcontrols}
             </Aux>
         )
@@ -135,20 +110,20 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        errorFetchingIngs: state.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (index, ingName) => {
-            const ingPrice = fullIngredients[index].price
-            return dispatch(burgerBuilderAction.addIngredient(ingName, ingPrice))
+        onIngredientAdded: (id) => {
+            return dispatch(burgerBuilderAction.addIngredient(id))
         },
-        onIngredientRemoved: (index, ingName) => {
-            const ingPrice = fullIngredients[index].price
-            return dispatch(burgerBuilderAction.removeIngredient(ingName, ingPrice))
-        }
+        onIngredientRemoved: (id) => {
+            return dispatch(burgerBuilderAction.removeIngredient(id))
+        },
+        onInitIngredients: () => dispatch(burgerBuilderAction.initIngredients())
     }
 }
 
