@@ -82,17 +82,17 @@ class BurgerBuilder extends Component {
             // correr esto solo una vez
             // para evitar duplicidad
 
-            axios.get('/ingredientes.json')
-            .then(response => {
-                response.data.map(item => ingredientList.push(item))
-                fullIngredients = [...ingredientList]
-                this.setState({
-                    loadingIngredients: false
-                })
-            })
-            .catch(error => {
-                this.setState({error: true})
-            })
+            // axios.get('/ingredientes.json')
+            // .then(response => {
+            //     response.data.map(item => ingredientList.push(item))
+            //     fullIngredients = [...ingredientList]
+            //     this.setState({
+            //         loadingIngredients: false
+            //     })
+            // })
+            // .catch(error => {
+            //     this.setState({error: true})
+            // })
 
         } else {
             this.setState({loadingIngredients: false})
