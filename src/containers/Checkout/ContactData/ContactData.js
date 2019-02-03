@@ -8,6 +8,8 @@ import Stylesheet from './ContactData.css';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
+import withErrorMessageHandler from '../../../hoc/ErrorMessageHandler/ErrorMessageHandler';
+import * as actions from '../../../store/actions/index';
 
 
 class ContactData extends Component {
@@ -92,9 +94,7 @@ class ContactData extends Component {
                 valid: true
             }
         },
-        formIsValid: false,
-        loadingPurchase: false,
-        sentPurchase: false
+        formIsValid: false
     }
 
     orderClickHandler = (ev) => {
@@ -110,16 +110,7 @@ class ContactData extends Component {
             pedidoData.cliente[inputId] = this.state.orderDataForm[inputId].value
         }
 
-        this.setState({loadingPurchase: true})
-        
-        axios.post('/pedidos.json', pedidoData)
-            .then(response => {
-                //this.setState({loadingPurchase: false, sentPurchase: true})
-                this.props.history.replace('/')
-            })
-            .catch(error => {
-                this.setState({loadingPurchase: false})
-            })
+        this.props.onOrderInit(pedidoData)
     }
 
     checkValidations(value, rules) {
@@ -173,20 +164,16 @@ class ContactData extends Component {
                 changed={(event) => this.onInputChangedHandler(event, fi)} />
         )
 
-        if (this.state.loadingPurchase) {
+        if (this.props.loading) {
             form = <Spinner />
         } else {
-            if (this.state.sentPurchase) {
-                form = <p style={{textAlign: 'center'}}>Order was sent!</p>
-            } else {
-                form = (
-                    <form onSubmit={this.orderClickHandler}>
-                        <legend>Enter your contact details</legend>
-                        {formInputs}
-                        <Button btnType='Success' btnClicked={this.orderClickHandler} disabled={!this.state.formIsValid}>ORDER</Button>
-                    </form>
-                )
-            }
+            form = (
+                <form onSubmit={this.orderClickHandler}>
+                    <legend>Enter your contact details</legend>
+                    {formInputs}
+                    <Button btnType='Success' btnClicked={this.orderClickHandler} disabled={!this.state.formIsValid}>ORDER</Button>
+                </form>
+            )
             
         }
         return (
@@ -200,8 +187,15 @@ class ContactData extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        loading: state.loading
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderInit: (orderData) => dispatch(actions.purchaseBurger(orderData))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorMessageHandler(ContactData, axios));
