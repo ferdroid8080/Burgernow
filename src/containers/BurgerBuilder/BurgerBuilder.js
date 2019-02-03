@@ -106,9 +106,9 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice,
-        errorFetchingIngs: state.error
+        ingredients: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        errorFetchingIngs: state.burgerBuilder.error
     }
 }
 
