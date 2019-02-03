@@ -50,12 +50,9 @@ class BurgerBuilder extends Component {
     updatePurchasable = (ingredients) => {
         let sum = 0
         if (ingredients) {
-            sum = Object.keys(ingredients)
-            .map(igKey => {
-                return ingredients[igKey]
-            }).reduce((sum, el) => {
-                return sum + el
-            }, 0)
+            sum = ingredients
+                .map(i => i.count ? i.count : 0)
+                .reduce((prev, acc) => prev + acc)
         }
         return sum > 0
     }
