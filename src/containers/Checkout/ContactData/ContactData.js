@@ -101,7 +101,7 @@ class ContactData extends Component {
         ev.preventDefault()
 
         const pedidoData = {
-            ingredientes: this.props.ingredients,
+            ingredientes: this.props.ingredients.filter(i => i.count && i.count > 0),
             precio: this.props.price,
             cliente: {}
         }
@@ -166,6 +166,11 @@ class ContactData extends Component {
 
         if (this.props.loading) {
             form = <Spinner />
+        } else if (this.props.purchaseSaved) {
+            form = <p style={{textAlign: 'center'}}>¡El pedido ha sido enviado satisfactoriamente!</p>
+            setTimeout(() => {
+                window.location.href = '/'
+            }, 800)
         } else {
             form = (
                 <form onSubmit={this.orderClickHandler}>
@@ -186,9 +191,10 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice,
-        loading: state.loading
+        ingredients: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading,
+        purchaseSaved: state.order.purchaseSaved
     }
 }
 
