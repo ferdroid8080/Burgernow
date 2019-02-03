@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     orders: [],
-    loading: false
+    loading: false,
+    purchaseSaved: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +28,12 @@ const reducer = (state = initialState, action) => {
         return {
             ...state,
             loading: false
+        }
+    }
+    if (action.type === actionTypes.PURCHASE_BURGER_SAVED) {
+        return {
+            ...state,
+            purchaseSaved: true
         }
     }
     return state

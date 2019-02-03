@@ -22,13 +22,20 @@ export const purchaseBurgerInit = () => {
     }
 }
 
+export const purchaseSaved = () => {
+    return {
+        type: actionTypes.PURCHASE_BURGER_SAVED
+    }
+}
+
 export const purchaseBurger = (orderData) => {
     return dispatch => {
         dispatch(purchaseBurgerInit())
         axios.post('/pedidos.json', orderData)
             .then(response => {
                 console.log(response.data)
-                dispatch(purchaseBurgerSuccess(response.data, orderData))
+                dispatch(purchaseBurgerSuccess(response.data.name, orderData))
+                dispatch(purchaseSaved())
             })
             .catch(error => {
                 dispatch(purcharseBurgerFail(error))
