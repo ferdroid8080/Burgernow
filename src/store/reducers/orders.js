@@ -37,6 +37,27 @@ const reducer = (state = initialState, action) => {
             purchaseSaved: false
         }
     }
+
+    if (action.type === actionTypes.FETCH_ORDERS_INIT) {
+        return {
+            ...state,
+            loading: true
+        }
+    }
+    if (action.type === actionTypes.FETCH_ORDERS_SUCCEEDED) {
+        return {
+            ...state,
+            loading: false,
+            orders: action.orders
+        }
+    }
+    if (action.type === actionTypes.FETCH_ORDERS_FAILED) {
+        return {
+            ...state,
+            loading: false
+        }
+    }
+
     return state
 }
 
