@@ -21,7 +21,8 @@ const reducer = (state = initialState, action) => {
         return {
             ...state,
             loading: false,
-            orders: state.orders.concat(newOrder)
+            orders: state.orders.concat(newOrder),
+            purchaseSaved: true
         }
     }
     if (action.type === actionTypes.PURCHASE_BURGER_FAILED) {
@@ -33,7 +34,7 @@ const reducer = (state = initialState, action) => {
     if (action.type === actionTypes.PURCHASE_BURGER_SAVED) {
         return {
             ...state,
-            purchaseSaved: true
+            purchaseSaved: false
         }
     }
     return state

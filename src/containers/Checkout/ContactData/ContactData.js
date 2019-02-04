@@ -168,9 +168,7 @@ class ContactData extends Component {
             form = <Spinner />
         } else if (this.props.purchaseSaved) {
             form = <p style={{textAlign: 'center'}}>¡El pedido ha sido enviado satisfactoriamente!</p>
-            setTimeout(() => {
-                window.location.href = '/'
-            }, 800)
+            
         } else {
             form = (
                 <form onSubmit={this.orderClickHandler}>

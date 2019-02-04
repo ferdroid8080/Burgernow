@@ -20,8 +20,10 @@ class Checkout extends Component {
         let checkout = null, ings = null
         ings = this.props.ingredients ? this.props.ingredients.filter(i => i.count && i.count > 0) : null
         if (ings && ings.length > 0) {
+            const purchasedRedirect = this.props.purchased ? <Redirect to='/' /> : null
             checkout = (
                 <Aux>
+                    {purchasedRedirect}
                     <CheckoutSummary 
                         ingredients={this.props.ingredients} 
                         clickedCancel={this.checkoutCancelHandler.bind(this)} 
@@ -46,7 +48,8 @@ class Checkout extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
-        price: state.burgerBuilder.totalPrice
+        price: state.burgerBuilder.totalPrice,
+        purchased: state.order.purchaseSaved
     }
 }
 

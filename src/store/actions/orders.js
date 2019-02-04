@@ -35,7 +35,6 @@ export const purchaseBurger = (orderData) => {
             .then(response => {
                 console.log(response.data)
                 dispatch(purchaseBurgerSuccess(response.data.name, orderData))
-                dispatch(purchaseSaved())
             })
             .catch(error => {
                 dispatch(purcharseBurgerFail(error))
