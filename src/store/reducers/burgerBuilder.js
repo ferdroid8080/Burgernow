@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 const initialState = {
     ingredients: null,
@@ -11,39 +12,29 @@ const reducer = (state = initialState, action) => {
         const updatedIngredients = state.ingredients ? [...state.ingredients] : []
         const itemIndex = updatedIngredients.findIndex(i => i.id === action.ingredientId)
         updatedIngredients[itemIndex].count = updatedIngredients[itemIndex].count ? updatedIngredients[itemIndex].count + 1 : 1
-        return {
-            ...state,
-            ingredients: [
-                ...updatedIngredients
-            ],
+        return updateObject(state, {
+            ingredients: [...updatedIngredients],
             totalPrice: state.totalPrice + updatedIngredients[itemIndex].price
-        }
+        })
     }
     if (action.type === actionTypes.REMOVE_INGREDIENT) {
         const updatedIngredients = state.ingredients ? [...state.ingredients] : []
         const itemIndex = updatedIngredients.findIndex(i => i.id === action.ingredientId)
         updatedIngredients[itemIndex].count = updatedIngredients[itemIndex].count ? updatedIngredients[itemIndex].count - 1 : 0 
-        return {
-            ...state,
-            ingredients: [
-                ...state.ingredients,
-            ],
+        return updateObject(state, {
+            ingredients: [...state.ingredients],
             totalPrice: state.totalPrice - updatedIngredients[itemIndex].price
-        }
+        })
     }
     if (action.type === actionTypes.SAVE_INGREDIENT) {
-        return {
-            ...state,
+        return updateObject(state, {
             ingredients: action.ingredients,
             error: false,
             totalPrice: 4000
-        }
+        })
     }
     if (action.type === actionTypes.FETCH_INGREDIENT_FAILED) {
-        return {
-            ...state, 
-            error: true
-        }
+        return updateObject(state, {error: true})
     }
     return state
 }
