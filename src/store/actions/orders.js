@@ -41,3 +41,45 @@ export const purchaseBurger = (orderData) => {
             })
     }
 }
+
+
+export const fetchOrdersSuccess = (orders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_SUCCEEDED,
+        orders: orders
+    }
+}
+
+
+export const fetchOrdersFail = (error) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_FAILED,
+        error: error
+    }
+}
+
+export  const fetchOrdersInit = () => {
+    return {
+        type: actionTypes.FETCH_ORDERS_INIT
+    }
+}
+
+export const fetchOrders = () => {
+    return dispatch => {
+        dispatch(fetchOrdersInit())
+        axios.get('/pedidos.json')
+            .then(res => {
+                const fetchedOrders = []
+                for (let k in res.data) {
+                    fetchedOrders.push({
+                        ...res.data[k],
+                        id: k
+                    })
+                }
+                dispatch(fetchOrdersSuccess(fetchedOrders))
+            })
+            .catch(err => {
+                dispatch(fetchOrdersFail(err))
+            })
+    }
+}
