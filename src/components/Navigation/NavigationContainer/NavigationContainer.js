@@ -9,6 +9,7 @@ const navigationContainer = (props) => (
     <ul className={Stylesheet.NavigationContainer}>
         <NavItem link="/" exact>Personalizala!</NavItem>
         <NavItem link="/orders">Pedidos</NavItem>
+        <NavItem link="/auth">Autenticarse</NavItem>
     </ul>
 )
 
