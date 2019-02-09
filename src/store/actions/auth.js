@@ -29,7 +29,7 @@ export const auth = (email, passwd, isSignup) => {
         if (!isSignup) {
             action = 'verifyPassword'
         }
-        axios.post(action + '?key=AIzaSyAgrMnWoDhrkbzXPBQ9DOzicmu74_XqHqc', {
+        axios.post(action + '?key=[API_KEY]', {
             email: email,
             password: passwd,
             returnSecureToken: true
