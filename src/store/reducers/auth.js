@@ -30,6 +30,13 @@ const authReducer = (state = initialState, action) => {
             error: action.error
         }
     }
+    if (action.type === actionTypes.AUTH_LOGOUT) {
+        return {
+            ...state,
+            userId: null,
+            idToken: null
+        }
+    }
     return state
 }
 
