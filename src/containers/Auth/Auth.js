@@ -7,6 +7,8 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+import { parseErrorCodes } from '../../helpers/utility';
+
 import * as actions from '../../store/actions/index';
 
 
@@ -122,7 +124,7 @@ class Auth extends Component {
         let errorMsg = null
         if (this.props.error) {
             errorMsg = (
-                <p>{this.props.error.message}</p>
+                <p>{parseErrorCodes(this.props.error.message)}</p>
             )
         }
 
