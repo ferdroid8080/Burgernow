@@ -8,3 +8,6 @@ export {
     purchaseSaved,
     fetchOrders
 } from './orders';
+export {
+    auth
+} from './auth';

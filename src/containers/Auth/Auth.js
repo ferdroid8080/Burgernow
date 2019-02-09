@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Stylesheet from './Auth.css';
 
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import * as actions from '../../store/actions/index';
 
 
 class Auth extends Component {
     state = {
         controls: {
-            username: {
+            email: {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'Nombre de usuario'
+                    placeholder: 'Correo electronico'
                 },
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    isEmail: true
                 },
                 valid: false,
                 touched: false
@@ -36,7 +39,8 @@ class Auth extends Component {
                 valid: false,
                 touched: false
             }
-        }
+        },
+        isSignup: false
     } 
 
     checkValidations(value, rules) {
@@ -54,7 +58,15 @@ class Auth extends Component {
             isValid = value.trim().length <= rules.max && isValid
         }
 
+        if (rules.isEmail) {
+            isValid = this.emailValid(value.trim()) && isValid
+        }
+
         return isValid
+    }
+
+    emailValid(email='') {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }
 
     onInputChangedHandler = (event, inputId) => {
@@ -71,6 +83,20 @@ class Auth extends Component {
         this.setState({controls: updatedControls})
     }
 
+    submitHandler = event => {
+        event.preventDefault()
+        this.props.onAuth(
+            this.state.controls.email.value, 
+            this.state.controls.passwd.value, 
+            this.state.isSignup
+        )
+    }
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return {isSignup: !prevState.isSignup}
+        })
+    }
     
     render() {
         let form = null, formInputs = null
@@ -88,19 +114,31 @@ class Auth extends Component {
         )
 
         form = (
-            <form onSubmit={this.orderClickHandler}>
+            <form onSubmit={this.submitHandler}>
                 <legend>Enter your login details</legend>
                 {formInputs}
-                <Button btnType="Success">Log in</Button>
+                {this.state.isSignup
+                    ?
+                    <Button btnType="Success">Register an account</Button>
+                    :
+                    <Button btnType="Success">Log in</Button>
+                }
             </form>
         )
 
         return (
             <div className={Stylesheet.Auth}>
                 {form}
+                <Button btnClicked={this.switchAuthModeHandler} btnType="Danger">Switch to {this.state.isSignup ? 'signin' : 'signup'}</Button>
             </div>
         )
     }
 }
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, passwd, isSignup) => dispatch(actions.auth(email, passwd, isSignup))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Auth);
