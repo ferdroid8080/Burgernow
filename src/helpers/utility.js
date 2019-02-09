@@ -10,7 +10,7 @@ export const parseErrorCodes = (errorCode) => {
 
     if (errorCode === 'EMAIL_EXISTS') {
         errorMessage = 'La direccion de correo ya existe'
-    } else if (errorCode.indexOf('TOO_MANY_ATTEMPTS_TRY_LATER') != -1) {
+    } else if (errorCode.indexOf('TOO_MANY_ATTEMPTS_TRY_LATER') !== -1) {
         errorMessage = 'Ha hecho muchos intentos de autenticacion, por favor intente mas tarde'
     } else if (errorCode === 'EMAIL_NOT_FOUND') {
         errorMessage = 'No se encuentra registrado el correo electronico que especifica'
