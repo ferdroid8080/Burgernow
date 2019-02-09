@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { Redirect } from 'react-router-dom';
+
 import Stylesheet from './Auth.css';
 
 import Input from '../../components/UI/Input/Input';
@@ -142,8 +144,14 @@ class Auth extends Component {
             </form>
         )
 
+        let authRedirect = null
+        if (this.props.isAuthenticated) {
+            authRedirect = <Redirect to='/' />
+        }
+
         return (
             <div className={Stylesheet.Auth}>
+                {authRedirect}
                 {form}
                 <Button btnClicked={this.switchAuthModeHandler} btnType="Danger">Switch to {this.state.isSignup ? 'signin' : 'signup'}</Button>
             </div>
@@ -154,7 +162,8 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isAuthenticated: state.auth.idToken !== null
     }
 }
 
