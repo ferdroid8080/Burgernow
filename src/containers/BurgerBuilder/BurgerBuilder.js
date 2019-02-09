@@ -58,7 +58,11 @@ class BurgerBuilder extends Component {
     }
 
     purchaseHandler = () => { // las arrow function permite usar el contexto this de la clase
-        this.setState({purchasing: true})
+        if (this.props.isAuthenticated) {
+            this.setState({purchasing: true})
+        } else {
+            this.props.history.push('/auth')
+        }
     }
 
     purchaseCancelHandler = () => {
@@ -86,6 +90,7 @@ class BurgerBuilder extends Component {
             burger = <Burger ingredients={this.props.ingredients} />
             buildcontrols = (
                 <BuildControls 
+                    isAuth={this.props.isAuthenticated}
                     onAddedIngredient={this.props.onIngredientAdded} onRemovedIngredient={this.props.onIngredientRemoved} 
                     price={this.props.price} purchasable={this.updatePurchasable(this.props.ingredients)} 
                     clicked={this.purchaseHandler} controls={this.props.ingredients} />
@@ -109,7 +114,8 @@ const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        errorFetchingIngs: state.burgerBuilder.error
+        errorFetchingIngs: state.burgerBuilder.error,
+        isAuthenticated: state.auth.idToken !== null
     }
 }
 

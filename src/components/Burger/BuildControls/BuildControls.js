@@ -16,7 +16,7 @@ const buildControls = (props) => {
             })}
             <button className={Stylesheet.OrderButton} 
                 disabled={!props.purchasable}
-                onClick={props.clicked}>Pedir esta deliciosa Hamburguesa</button>
+                onClick={props.clicked}>{props.isAuth ? 'Pedir esta deliciosa Hamburguesa' : 'Inicia sesion para hacer el pedido'}</button>
         </div>
     )
 }
