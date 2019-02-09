@@ -110,7 +110,7 @@ class ContactData extends Component {
             pedidoData.cliente[inputId] = this.state.orderDataForm[inputId].value
         }
 
-        this.props.onOrderInit(pedidoData)
+        this.props.onOrderInit(pedidoData, this.props.token)
     }
 
     checkValidations(value, rules) {
@@ -192,13 +192,14 @@ const mapStateToProps = state => {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
-        purchaseSaved: state.order.purchaseSaved
+        purchaseSaved: state.order.purchaseSaved,
+        token: state.auth.idToken
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderInit: (orderData) => dispatch(actions.purchaseBurger(orderData))
+        onOrderInit: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
     }
 }
 
