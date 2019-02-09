@@ -12,7 +12,7 @@ const toolbar = (props) => {
             <MenuToggler clicked={props.menuClicked} />
             <Logo />
             <nav>
-                <NavigationContainer />                
+                <NavigationContainer isAuthenticated={props.isAuth} />                
             </nav>
         </header>
     )

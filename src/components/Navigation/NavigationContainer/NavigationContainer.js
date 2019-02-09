@@ -8,8 +8,12 @@ import NavItem from './NavItem/NavItem';
 const navigationContainer = (props) => (
     <ul className={Stylesheet.NavigationContainer}>
         <NavItem link="/" exact>Personalizala!</NavItem>
-        <NavItem link="/orders">Pedidos</NavItem>
-        <NavItem link="/auth">Autenticarse</NavItem>
+        {props.isAuthenticated ? <NavItem link="/orders">Pedidos</NavItem> : null}
+        {!props.isAuthenticated
+            ? <NavItem link="/auth">Autenticarse</NavItem>
+            : <NavItem link="/logout">Salir</NavItem>
+        }
+        
     </ul>
 )
 
