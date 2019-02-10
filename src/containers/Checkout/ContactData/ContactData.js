@@ -103,7 +103,8 @@ class ContactData extends Component {
         const pedidoData = {
             ingredientes: this.props.ingredients.filter(i => i.count && i.count > 0),
             precio: this.props.price,
-            cliente: {}
+            cliente: {},
+            userId: this.props.userId
         }
 
         for (let inputId in this.state.orderDataForm) {
@@ -193,7 +194,8 @@ const mapStateToProps = state => {
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
         purchaseSaved: state.order.purchaseSaved,
-        token: state.auth.idToken
+        token: state.auth.idToken,
+        userId: state.auth.userId
     }
 }
 
