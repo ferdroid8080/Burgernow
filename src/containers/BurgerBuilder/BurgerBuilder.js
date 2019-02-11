@@ -25,28 +25,6 @@ class BurgerBuilder extends Component {
 
     }
 
-    addIngredientHandler = (index, type) => {
-        // let updateIngredients = {...this.state.ingredients}
-        
-        // if (updateIngredients[type] === undefined) {
-        //     updateIngredients[type] = 1
-        // } else {
-        //     updateIngredients[type] += 1
-        // }        
-        // const newPrice = this.state.totalPrice + this.state.fullIngredients[index].price
-        // this.setState({totalPrice: newPrice, ingredients: updateIngredients})
-        // this.updatePurchasable(updateIngredients)
-    }
-
-    removeIngredientHandler = (index, type) => {
-        // let updateCount = this.state.ingredients[type] > 0 ? this.state.ingredients[type] - 1 : 0
-        // let updateIngredients = {...this.state.ingredients}
-        // updateIngredients[type] = updateCount
-        // const newPrice = this.state.totalPrice > 3.12 ? this.state.totalPrice - this.state.fullIngredients[index].price : 3.12
-        // this.setState({totalPrice: newPrice, ingredients: updateIngredients})
-        // this.updatePurchasable(updateIngredients)
-    }
-
     updatePurchasable = (ingredients) => {
         let sum = 0
         if (ingredients) {
@@ -77,7 +55,6 @@ class BurgerBuilder extends Component {
 
 
     componentDidMount() {
-        console.log('[DidMount] BurgerBuilder has beend mounted!')
         this.props.onInitIngredients()
     }
 

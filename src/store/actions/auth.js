@@ -51,7 +51,6 @@ export const auth = (email, passwd, isSignup) => {
             password: passwd,
             returnSecureToken: true
         }).then(response => {
-                console.log(response)
                 const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000)
                 localStorage.setItem('token', response.data.idToken)
                 localStorage.setItem('userId', response.data.localId)
@@ -60,7 +59,6 @@ export const auth = (email, passwd, isSignup) => {
                 dispatch(checkAuthExpirationTime(response.data.expiresIn))
             })
         .catch(err => {
-            console.log(err)
             dispatch(authFail(err.response.data.error))
         })
     }

@@ -33,7 +33,6 @@ export const purchaseBurger = (orderData, token) => {
         dispatch(purchaseBurgerInit())
         axios.post('/pedidos.json?auth=' + token, orderData)
             .then(response => {
-                console.log(response.data)
                 dispatch(purchaseBurgerSuccess(response.data.name, orderData))
             })
             .catch(error => {
