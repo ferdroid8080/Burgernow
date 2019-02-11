@@ -22,3 +22,31 @@ export const parseErrorCodes = (errorCode) => {
 
     return errorMessage
 }
+
+
+export const checkValidations = (value, rules) => {
+    let isValid = true
+    
+    if (rules.required) {
+        isValid = value.trim().length !== 0 && isValid
+    }
+
+    if (rules.min) {
+        isValid = value.trim().length >= rules.min && isValid
+    }
+
+    if (rules.max) {
+        isValid = value.trim().length <= rules.max && isValid
+    }
+
+    if (rules.isEmail) {
+        isValid = emailValid(value.trim()) && isValid
+    }
+
+    return isValid
+}
+
+
+export const emailValid = (email='') => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}

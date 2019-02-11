@@ -10,7 +10,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import withErrorMessageHandler from '../../../hoc/ErrorMessageHandler/ErrorMessageHandler';
 import * as actions from '../../../store/actions/index';
-import { updateObject } from '../../../helpers/utility';
+import { updateObject, checkValidations } from '../../../helpers/utility';
 
 
 class ContactData extends Component {
@@ -119,29 +119,12 @@ class ContactData extends Component {
         this.props.onOrderInit(pedidoData, this.props.token)
     }
 
-    checkValidations(value, rules) {
-        let isValid = true
-        
-        if (rules.required) {
-            isValid = value.trim().length !== 0 && isValid
-        }
-
-        if (rules.min) {
-            isValid = value.trim().length >= rules.min && isValid
-        }
-
-        if (rules.max) {
-            isValid = value.trim().length <= rules.max && isValid
-        }
-
-        return isValid
-    }
 
     onInputChangedHandler = (event, inputId) => {
         const value = event.target.value
         const updatedInputElement = updateObject(this.state.orderDataForm[inputId], {
             value: value,
-            valid: this.checkValidations(value, this.state.orderDataForm[inputId].validation),
+            valid: checkValidations(value, this.state.orderDataForm[inputId].validation),
             touched: true
         })
         const updatedOrderForm = updateObject(this.state.orderDataForm, {

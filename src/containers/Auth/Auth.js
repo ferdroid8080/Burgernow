@@ -9,7 +9,7 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-import { parseErrorCodes, updateObject } from '../../helpers/utility';
+import { parseErrorCodes, updateObject, checkValidations } from '../../helpers/utility';
 
 import * as actions from '../../store/actions/index';
 
@@ -55,38 +55,13 @@ class Auth extends Component {
         }
     }
 
-    checkValidations(value, rules) {
-        let isValid = true
-        
-        if (rules.required) {
-            isValid = value.trim().length !== 0 && isValid
-        }
-
-        if (rules.min) {
-            isValid = value.trim().length >= rules.min && isValid
-        }
-
-        if (rules.max) {
-            isValid = value.trim().length <= rules.max && isValid
-        }
-
-        if (rules.isEmail) {
-            isValid = this.emailValid(value.trim()) && isValid
-        }
-
-        return isValid
-    }
-
-    emailValid(email='') {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    }
 
     onInputChangedHandler = (event, inputId) => {
         const value = event.target.value
         const updatedControls = updateObject(this.state.controls, {
             [inputId]: updateObject(this.state.controls[inputId], {
                 value: value,
-                valid: this.checkValidations(value, this.state.controls[inputId].validation),
+                valid: checkValidations(value, this.state.controls[inputId].validation),
                 touched: true
             })
         }) 
