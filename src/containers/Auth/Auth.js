@@ -9,7 +9,7 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-import { parseErrorCodes } from '../../helpers/utility';
+import { parseErrorCodes, updateObject } from '../../helpers/utility';
 
 import * as actions from '../../store/actions/index';
 
@@ -83,15 +83,14 @@ class Auth extends Component {
 
     onInputChangedHandler = (event, inputId) => {
         const value = event.target.value
-        const updatedControls = {
-            ...this.state.controls,
-            [inputId]: {
-                ...this.state.controls[inputId],
+        const updatedControls = updateObject(this.state.controls, {
+            [inputId]: updateObject(this.state.controls[inputId], {
                 value: value,
                 valid: this.checkValidations(value, this.state.controls[inputId].validation),
                 touched: true
-            }
-        }
+            })
+        }) 
+
         this.setState({controls: updatedControls})
     }
 

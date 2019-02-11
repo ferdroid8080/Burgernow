@@ -10,6 +10,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import withErrorMessageHandler from '../../../hoc/ErrorMessageHandler/ErrorMessageHandler';
 import * as actions from '../../../store/actions/index';
+import { updateObject } from '../../../helpers/utility';
 
 
 class ContactData extends Component {
@@ -91,7 +92,11 @@ class ContactData extends Component {
                     ]
                 },
                 value: 'cheapest',
-                valid: true
+                validation: {
+                    required: false
+                },
+                valid: true,
+                touched: false
             }
         },
         formIsValid: false
@@ -133,14 +138,15 @@ class ContactData extends Component {
     }
 
     onInputChangedHandler = (event, inputId) => {
-        const updatedOrderForm = {...this.state.orderDataForm}
-        const updatedInputElement = {...updatedOrderForm[inputId]}
-        updatedInputElement.value = event.target.value
-        if (updatedInputElement.validation)
-            updatedInputElement.valid = this.checkValidations(updatedInputElement.value, updatedInputElement.validation)
-        updatedInputElement.touched = true
-        
-        updatedOrderForm[inputId] = updatedInputElement
+        const value = event.target.value
+        const updatedInputElement = updateObject(this.state.orderDataForm[inputId], {
+            value: value,
+            valid: this.checkValidations(value, this.state.orderDataForm[inputId].validation),
+            touched: true
+        })
+        const updatedOrderForm = updateObject(this.state.orderDataForm, {
+            [inputId]: updatedInputElement
+        })
         
         let formIsValid = true
         for (let inputId in updatedOrderForm) {
