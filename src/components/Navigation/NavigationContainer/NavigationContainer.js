@@ -6,7 +6,7 @@ import NavItem from './NavItem/NavItem';
 
 
 const navigationContainer = (props) => (
-    <ul className={Stylesheet.NavigationContainer}>
+    <ul className={Stylesheet.NavigationContainer} onClick={props.closed}>
         <NavItem link="/" exact>Personalizala!</NavItem>
         {props.isAuthenticated ? <NavItem link="/orders">Pedidos</NavItem> : null}
         {!props.isAuthenticated

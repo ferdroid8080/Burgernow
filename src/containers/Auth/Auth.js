@@ -49,7 +49,7 @@ class Auth extends Component {
         isSignup: false
     } 
 
-    componentDidMount() {
+    componentWillMount() {
         if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
             this.props.onSetAuthRedirectPath()
         }
