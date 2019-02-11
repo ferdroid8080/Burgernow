@@ -19,6 +19,11 @@ describe('<NavigationContainer />', () => {
         expect(wrapper.find(NavItem)).toHaveLength(2)
     })
 
+    it('deberia renderizar un elemento de tipo <NavigationContainer /> que diga "Salir", solo si esta autenticado', () => {
+        wrapper.setProps({isAuthenticated: true})
+        expect(wrapper.contains(<NavItem link='/logout'>Salir</NavItem>)).toEqual(true)
+    })
+
     it('deberia renderizar tres elementos de tipo <NavigationContainer /> si esta autenticado', () => {
         wrapper.setProps({isAuthenticated: true})
         expect(wrapper.find(NavItem)).toHaveLength(3)
