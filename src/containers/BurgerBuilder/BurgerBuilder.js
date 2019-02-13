@@ -60,18 +60,20 @@ class BurgerBuilder extends Component {
 
 
     render() {
-        let buildcontrols = null, burger = null
+        let burger = null
 
         burger = this.props.errorFetchingIngs ? <p>Imposible obtener los ingredientes</p> : <Spinner />
 
         if (this.props.ingredients) {
-            burger = <Burger ingredients={this.props.ingredients} />
-            buildcontrols = (
-                <BuildControls 
-                    isAuth={this.props.isAuthenticated}
-                    onAddedIngredient={this.props.onIngredientAdded} onRemovedIngredient={this.props.onIngredientRemoved} 
-                    price={this.props.price} purchasable={this.updatePurchasable(this.props.ingredients)} 
-                    clicked={this.purchaseHandler} controls={this.props.ingredients} />
+            burger = (
+                <Aux>
+                    <Burger ingredients={this.props.ingredients} />
+                    <BuildControls 
+                        isAuth={this.props.isAuthenticated}
+                        onAddedIngredient={this.props.onIngredientAdded} onRemovedIngredient={this.props.onIngredientRemoved} 
+                        price={this.props.price} purchasable={this.updatePurchasable(this.props.ingredients)} 
+                        clicked={this.purchaseHandler} controls={this.props.ingredients} />
+                </Aux>
             )
         }
 
@@ -82,7 +84,6 @@ class BurgerBuilder extends Component {
                         purchaseCancelledHandler={this.purchaseCancelHandler} purchaseContinuedHandler={this.purchaseContinueHandler} />
                 </Modal>
                 {burger}
-                {buildcontrols}
             </Aux>
         )
     }
